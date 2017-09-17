@@ -24,11 +24,23 @@ function get_pwd {
     fi
 }
 
+function get_root_volumes {
+    if is_wsl; then
+        local rootvolumes=""
+        for drive in /mnt/*; do
+            rootvolumes+="-v /$(basename $drive):$drive "
+        done
+        echo "$rootvolumes"
+    else
+        echo ""
+    fi
+}
+
 typeset -A WHALEBOXES
-WHALEBOXES[terraform]='docker run -i --rm -v $(get_home)/.aws:/root/.aws -v $(get_pwd):/wd/ -w /wd/ hashicorp/terraform:light'
-WHALEBOXES[tflint]='docker run -i --rm -v $(get_home)/.aws:/root/.aws -v $(get_pwd):/wd/ -w /wd/ hashicorp/terraform:light'
-WHALEBOXES[jq]='docker run -i --rm -v $(get_pwd):/wd/ -w /wd/ z0beat/jq'
-WHALEBOXES[aws]='docker run -ti --rm -v $(get_home)/.aws:/root/.aws -v $(get_pwd):/wd/ -w /wd/ z0beat/awscli'
+WHALEBOXES[terraform]='docker run -ti --rm $(get_root_volumes) -v $(get_home)/.aws:/root/.aws -v $(get_pwd):/wd/ -w /wd/ hashicorp/terraform:light'
+WHALEBOXES[tflint]='docker run -ti --rm $(get_root_volumes) -v $(get_pwd):/wd/ -w /wd/ wata727/tflint:latest'
+WHALEBOXES[jq]='docker run -ti --rm $(get_root_volumes) -v $(get_pwd):/wd/ -w /wd/ z0beat/jq'
+WHALEBOXES[aws]='docker run -ti --rm $(get_root_volumes) -v $(get_home)/.aws:/root/.aws -v $(get_pwd):/wd/ -w /wd/ z0beat/awscli'
 
 for whalebox in "${(@k)WHALEBOXES}"; do
     alias $whalebox="$WHALEBOXES[$whalebox]"
