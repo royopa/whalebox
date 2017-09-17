@@ -38,12 +38,21 @@ function get_root_volumes {
     fi
 }
 
+function build_docker_command {
+    image=$1
+    echo 'docker run -ti --rm $(get_root_volumes) -v $(get_home):/root/ -v $(get_pwd):/wd/ -w /wd/' $image 
+}
+
 typeset -A WHALEBOXES
-WHALEBOXES[terraform]='docker run -ti --rm $(get_root_volumes) -v $(get_home)/.aws:/root/.aws -v $(get_pwd):/wd/ -w /wd/ hashicorp/terraform:light'
-WHALEBOXES[tflint]='docker run -ti --rm $(get_root_volumes) -v $(get_pwd):/wd/ -w /wd/ wata727/tflint:latest'
-WHALEBOXES[jq]='docker run -ti --rm $(get_root_volumes) -v $(get_pwd):/wd/ -w /wd/ z0beat/jq'
-WHALEBOXES[aws]='docker run -ti --rm $(get_root_volumes) -v $(get_home)/.aws:/root/.aws -v $(get_pwd):/wd/ -w /wd/ z0beat/awscli'
+WHALEBOXES[terraform]='hashicorp/terraform:light'
+WHALEBOXES[tflint]='wata727/tflint:latest'
+WHALEBOXES[jq]='z0beat/jq'
+WHALEBOXES[aws]='z0beat/awscli'
+WHALEBOXES[python2]='python:2-alpine python'
+WHALEBOXES[pip2]='python:2-alpine pip'
+WHALEBOXES[python3]='python:3-alpine python'
+WHALEBOXES[pip3]='python:3-alpine pip'
 
 for whalebox in "${(@k)WHALEBOXES}"; do
-    alias $whalebox="$WHALEBOXES[$whalebox]"
+    alias $whalebox="$(build_docker_command $WHALEBOXES[$whalebox])"
 done
