@@ -32,7 +32,9 @@ function get_root_volumes {
         done
         echo "$rootvolumes"
     else
-        echo ""
+        # For convenience, maybe the user wants to make a symlink like this:
+        # $ ln -s / /mnt/whalebox
+        echo "-v /:/mnt/whalebox"
     fi
 }
 
