@@ -44,14 +44,25 @@ function build_docker_command {
 }
 
 typeset -A WHALEBOXES
-WHALEBOXES[terraform]='hashicorp/terraform:light'
-WHALEBOXES[tflint]='wata727/tflint:latest'
-WHALEBOXES[jq]='z0beat/jq'
-WHALEBOXES[aws]='z0beat/awscli'
 WHALEBOXES[python2]='python:2-alpine python'
 WHALEBOXES[pip2]='python:2-alpine pip'
 WHALEBOXES[python3]='python:3-alpine python'
 WHALEBOXES[pip3]='python:3-alpine pip'
+WHALEBOXES[java6]='openjdk:6-alpine java'
+WHALEBOXES[java7]='openjdk:7-alpine java'
+WHALEBOXES[java8]='openjdk:8-alpine java'
+WHALEBOXES[java9]='openjdk:9-slim java'
+WHALEBOXES[mvn7]='maven:3-jdk-7-alpine mvn'
+WHALEBOXES[mvn8]='maven:3-jdk-8-alpine mvn'
+WHALEBOXES[mvn9]='maven:3-jdk-9-slim mvn'
+WHALEBOXES[aws]='z0beat/awscli'
+WHALEBOXES[azure]='microsoft/azure-cli:latest azure'
+WHALEBOXES[gcloud]='google/cloud-sdk:alpine gcloud'
+WHALEBOXES[gsutil]='google/cloud-sdk:alpine gsutil'
+WHALEBOXES[bq]='google/cloud-sdk:alpine bq'
+WHALEBOXES[terraform]='hashicorp/terraform:light'
+WHALEBOXES[tflint]='wata727/tflint:latest'
+WHALEBOXES[jq]='z0beat/jq'
 
 for whalebox in "${(@k)WHALEBOXES}"; do
     alias $whalebox="$(build_docker_command $WHALEBOXES[$whalebox])"
