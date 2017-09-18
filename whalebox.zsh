@@ -38,6 +38,12 @@ function get_root_volumes {
     fi
 }
 
+function whalebox_pull_all {
+    for whalebox in "${(@v)WHALEBOXES}"; do
+         echo $whalebox | awk -F' ' '{print $1}' | xargs -I {} docker pull {}
+    done
+}
+
 function build_docker_command {
     image=$1
     echo 'docker run -ti --rm $(get_root_volumes) -v $(get_home):/root/ -v $(get_pwd):/wd/ -w /wd/' $image 
@@ -67,3 +73,5 @@ WHALEBOXES[jq]='z0beat/jq'
 for whalebox in "${(@k)WHALEBOXES}"; do
     alias $whalebox="$(build_docker_command $WHALEBOXES[$whalebox])"
 done
+
+alias wpa=whalebox_pull_all
