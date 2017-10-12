@@ -38,5 +38,5 @@ function get_root_volumes {
     fi
 }
 
-docker run --rm whalebox > /tmp/whaleboxes.alias
+docker run --rm z0beat/whalebox sh > /tmp/whaleboxes.alias
 source /tmp/whaleboxes.alias
