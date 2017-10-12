@@ -1,0 +1,53 @@
+- python2:
+    image: python:2-alpine
+    cmd: python
+- pip2:
+    image: python:2-alpine
+    cmd: pip
+- python3:
+    image: python:3-alpine
+    cmd: python
+- pip3:
+    image: python:3-alpine
+    cmd: pip
+- java6:
+    image: openjdk:6-alpine
+    cmd: java
+- java7:
+    image: openjdk:7-alpine
+    cmd: java
+- java8:
+    image: openjdk:8-alpine
+    cmd: java
+- java9:
+    image: openjdk:9-slim
+    cmd: java
+- mvn7:
+    image: maven:3-jdk-7-alpine
+    cmd: mvn
+- mvn8:
+    image: maven:3-jdk-8-alpine
+    cmd: mvn
+- mvn9:
+    image: maven:3-jdk-9-slim
+    cmd: mvn
+- aws:
+    image: z0beat/awscli
+- azure:
+    image: azuresdk/azure-cli-python
+    cmd: az
+- gcloud:
+    image: google/cloud-sdk:alpine
+    cmd: gcloud
+- gsutil:
+    image: google/cloud-sdk:alpine
+    cmd: gsutil
+- bq:
+    image: google/cloud-sdk:alpine
+    cmd: bq
+- terraform:
+    image: hashicorp/terraform:light
+- tflint:
+    image: wata727/tflint:latest
+- jq:
+    image: z0beat/jq
